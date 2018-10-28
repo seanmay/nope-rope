@@ -8,7 +8,16 @@ class App extends Component {
     page: "gallery"
   };
 
-  setPage = (pagename) => this.setState(state => ({ page: pagename }));
+  setPage = pagename => this.setState(state => ({ page: pagename }));
+
+  getPage = pagename =>
+    pagename === "gallery" ? (
+      <GalleryPage />
+    ) : pagename === "create" ? (
+      <CreationPage />
+    ) : (
+      <div>Page not found</div>
+    );
 
   render() {
     return (
@@ -16,18 +25,18 @@ class App extends Component {
         <header>
           <nav>
             <ul>
-              <li><button onClick={() => this.setPage("gallery")}>gallery</button></li>
-              <li><button onClick={() => this.setPage("create")}>add animal</button></li>
+              <li>
+                <button onClick={() => this.setPage("gallery")}>gallery</button>
+              </li>
+              <li>
+                <button onClick={() => this.setPage("create")}>
+                  add animal
+                </button>
+              </li>
             </ul>
           </nav>
         </header>
-        {
-          this.state.page === "gallery"
-            ? <GalleryPage />
-          : this.state.page === "create"
-            ? <CreationPage />
-            : <div>Page not found</div>
-        }
+        {this.getPage(this.state.page)}
       </Fragment>
     );
   }
